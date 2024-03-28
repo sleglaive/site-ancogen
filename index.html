@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'UA-109046767-2');
+		</script>
+		<link rel="icon" type="image/png" href="demos/onglet.png" />
+
+		<!-- CHANGE HERE -->
+		<title>AnCoGen</title>
+		<!-- ----------- -->
+		<script src="https://cdn.jsdelivr.net/npm/before-after-slider@1.0.0/dist/slider.bundle.js"></script>
+
+
+		<script
+		  defer
+		  src="https://unpkg.com/img-comparison-slider@7/dist/index.js"
+		></script>
+		<link
+		  rel="stylesheet"
+		  href="https://unpkg.com/img-comparison-slider@7/dist/styles.css"
+		/>
+
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,600|Source+Code+Pro" rel="stylesheet" />
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script src="js/jquery.dropotron.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.css" integrity="sha384-D+9gmBxUQogRLqvARvNLmA9hS2x//eK1FhVb9PiU86gmcrBrJAQT8okdJ4LMp2uv" crossorigin="anonymous">
+
+		<!-- The loading of KaTeX is deferred to speed up page rendering -->
+		<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.js" integrity="sha384-483A6DwYfKeDa0Q52fJmxFXkcPCFfnXMoXblOkJ4JcA8zATN6Tm78UNL72AKk+0O" crossorigin="anonymous"></script>
+
+		<!-- To automatically render math in text elements, include the auto-render extension: -->
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/contrib/auto-render.min.js" integrity="sha384-yACMu8JWxKzSp/C1YV86pzGiQ/l1YUfE8oPuahJQxzehAjEt2GiQuy/BIvl9KyeF" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+		<script src="js/skel.min.js">
+		{
+			prefix: 'css/style',
+			preloadStyleSheets: true,
+			resetCSS: true,
+			boxModel: 'border',
+			grid: { gutters: 30 },
+			breakpoints: {
+				wide: { range: '1200-', containers: 1140, grid: { gutters: 50 } },
+				narrow: { range: '481-1199', containers: 960 },
+				mobile: { range: '-480', containers: 'fluid', lockViewport: true, grid: { collapse: true } }
+			}
+		}
+		</script>
+
+		<style>
+			table tr th, table tr td {
+			text-align: center;
+			vertical-align: middle;
+			border: 0px solid white;
+			border-collapse: collapse;
+			}
+		</style>
+
+		<style type="text/css">a {text-decoration: none}</style>
+
+	</head>
+
+	<body>
+
+		<div id="site_content">
+		<div class="container">
+
+		<!-- Features -->
+		<div class="row">
+			<section class="12u">
+
+				<h2 style="text-align: center;">
+					AnCoGen: a masked autoencoder-based model for analyzing, controlling, and generating audio speech
+				</h2>
+
+				<p style="text-align: center;">
+					Samir Sadok<sup>1</sup>&emsp;&emsp; Simon Leglaive<sup>1</sup> &emsp;&emsp;&emsp;
+				</p>
+
+				<p style="text-align: center; line-height: 100%;">
+					<sup>1</sup>CentraleSupélec, IETR UMR CNRS 6164, France &emsp;&emsp; <br>
+				</p>
+				<!--
+				<p style="text-align: center;">
+					Inproceedings
+				</p> 
+				-->
+
+				<p style="text-align: center;">
+					 <a href="https://arxiv.org/abs/2304.11117" target="_blank" rel="noopener">Article</a> |
+					<!-- <a href="#audio">Audio examples</a> |  -->
+<!--					 <a href="documents/presentation_icassp2020.pdf">Slides</a> |  -->
+					<a href="https://github.com/samsad35/VQ-MAE-S-code" target="_blank" rel="noopener">Code</a>
+					<!-- <a href="https://hal.archives-ouvertes.fr/hal-03603791v1/bibtex" target="_blank" rel="noopener">Bibtex</a> | -->
+					<!-- <a href="#acknowledgement">Acknowledgement</a> -->
+				</p>
+
+				<!-- Abstract -->
+				<strong><span style="font-size: large;"><a name="abstract"></a>Abstract</span></strong>
+				<hr>
+				
+				<div style="width:100%; text-align: center">
+					<table>
+						<td>
+							<img src="demos/ancogen.svg" alt="ancogen"  width="1100" />
+						</td>
+					</table>
+				</div>
+				<p style = "text-align: justify; vertical-align: top;">
+					Recent advancements in deep learning have led to significant progress in analyzing, controlling, and
+					generating audio speech. While various approaches have emerged to tackle these tasks individually,
+					this article focuses on a novel generative self-supervised learning method called AnCoGen, based
+					on masked autoencoders (MAE). While MAE-based methods have shown promise in tasks like
+					classification and segmentation, their potential for controllability and interpretability still needs to
+					be explored. This paper introduces the AnCoGen approach, which facilitates the analysis of audio
+					speech by estimating key factors of variation such as pitch, content, noise level, loudness, and identity.
+					Moreover, it enables the generation of audio speech from these factors and provides control over the
+					synthesized speech by modifying these factors. Extensive experiments are carried out to study the
+					capabilities of AnCoGen to analyze, control and generate speech audio.
+				</p>
+
+			<!-- VISUALISATION OF THE LEARNED LATENT SUBSPACES -->
+			<span style="font-size: large;"><a name="latentspace"></a><strong>Analysis-generation</strong></span>
+			<hr>
+			We present some qualitative results below to demonstrate the effectiveness of our proposed AnCoGen method.
+			<br>
+				<br>
+				<div style="width:100%; text-align: justify; border: 2px dashed Green; padding: 10px;">
+<!--					<span style="font-size: medium; color:Red;"><a name="Visual"></a><strong><font size="+2">RATIO 50%</font></strong></span>-->
+					<div style="text-align: center;">
+						<div style="display:grid; grid-auto-columns:1fr; gap: 15px; grid-template-columns: 1fr 0.75fr 1fr; grid-template-rows:auto;">
+							<button id="back" onclick="back()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 50%; position: absolute}">Back</button>
+							<b id="number" style="color:#5E77E7;font-size: 20px;opacity: 0.7;">Example 1</b>
+							<button id="next" onclick="next()" style="border-radius: 10px; width: 200px;font-size: 18px; position: absolute}">Next</button>
+						</div>
+					</div>
+					<br>
+					<br>
+					<table style="width:100%; text-align: center;">
+						<td>
+							<p> <font size="+2">Original</font> </p>
+							<audio id="original_reconstruction" style="width: 500px" controls="controls" preload="none" src="demos/reconstruction/1_original.wav"></audio>
+						</td>
+
+						<td>
+							<p> <font size="+2">Reconstruction with AnCoGeN (ours)</font> </p>
+							<audio id="rec_reconstruction" style="width: 500px" controls="controls" preload="none" src="demos/reconstruction/1_rec.wav"></audio>
+						</td>
+					</table>
+				</div>
+			<br>
+
+				<script>
+				backButton = document.getElementById("back");
+				nextButton = document.getElementById("next");
+				number = document.getElementById("number");
+				var count = 1;
+				if (count == 1){
+					backButton.disabled = true;
+				}
+
+				function next(){
+					count = count + 1;
+					if (count != 1){
+						backButton.disabled = false;
+					}
+					if (count == 10){
+						nextButton.disabled = true;
+					}
+					number.innerHTML = "Example " + count;
+					document.getElementById('original_reconstruction').src="demos/reconstruction/"+count+"_original.wav"
+					document.getElementById('rec_reconstruction').src="demos/reconstruction/"+count+"_rec.wav"
+					}
+
+				function back(){
+					count = count - 1;
+					if (count == 1){
+						backButton.disabled = true;
+					}
+					if (count < 10){
+						nextButton.disabled = false;
+					}
+					number.innerHTML = "Example " + count;
+					document.getElementById('original_reconstruction').src="demos/reconstruction/"+count+"_original.wav"
+					document.getElementById('rec_reconstruction').src="demos/reconstruction/"+count+"_rec.wav"
+					}
+			</script>
+
+</body>
+</html>
