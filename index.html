@@ -10,6 +10,10 @@
 		</script>
 		<link rel="icon" type="image/png" href="demos/onglet.png" />
 
+		<!-- Player audio -->
+		<link rel="stylesheet" type="text/css" media="screen" href="audio-player.css" />
+		<script src="audio-player.js"></script>
+
 		<!-- CHANGE HERE -->
 		<title>AnCoGen</title>
 		<!-- ----------- -->
@@ -124,10 +128,10 @@
 					capabilities of AnCoGen to analyze, control and generate speech audio.
 				</p>
 
-			<!-- VISUALISATION OF THE LEARNED LATENT SUBSPACES -->
+			<!-- Analysis-generation -->
 			<span style="font-size: large;"><a name="latentspace"></a><strong>Analysis-generation</strong></span>
 			<hr>
-			We present some qualitative results below to demonstrate the effectiveness of our proposed AnCoGen method.
+			We first present the results of an analysis-<u>generation</u> process on audio speech data. The analysis involves encoding audio speech sequences (<span style="color:red">\(\mathbf{x}^{(a)}\) </span>) and decoding the factors of variation (<span style="color:blue">\(\mathbf{x}^{(f)}\) </span>). Subsequently, the generation step consists of generating the audio sequence (<span style="color:red">\(\mathbf{x}^{(a)}\) </span>) from these factors obtained without any modification, intending to reconstruct the input sequence faithfully.
 			<br>
 				<br>
 				<div style="width:100%; text-align: justify; border: 2px dashed Green; padding: 10px;">
@@ -135,7 +139,7 @@
 					<div style="text-align: center;">
 						<div style="display:grid; grid-auto-columns:1fr; gap: 15px; grid-template-columns: 1fr 0.75fr 1fr; grid-template-rows:auto;">
 							<button id="back" onclick="back()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 50%; position: absolute}">Back</button>
-							<b id="number" style="color:#5E77E7;font-size: 20px;opacity: 0.7;">Example 1</b>
+							<b id="number" style="color:darkolivegreen;font-size: 20px;opacity: 0.7;">Example 1</b>
 							<button id="next" onclick="next()" style="border-radius: 10px; width: 200px;font-size: 18px; position: absolute}">Next</button>
 						</div>
 					</div>
@@ -144,16 +148,55 @@
 					<table style="width:100%; text-align: center;">
 						<td>
 							<p> <font size="+2">Original</font> </p>
-							<audio id="original_reconstruction" style="width: 500px" controls="controls" preload="none" src="demos/reconstruction/1_original.wav"></audio>
+							<audio id="original_reconstruction" style="width: 300px" controls="controls" preload="none" src="demos/reconstruction/1_original.wav"></audio>
 						</td>
 
 						<td>
 							<p> <font size="+2">Reconstruction with AnCoGeN (ours)</font> </p>
-							<audio id="rec_reconstruction" style="width: 500px" controls="controls" preload="none" src="demos/reconstruction/1_rec.wav"></audio>
+							<audio id="rec_reconstruction" style="width: 300px" controls="controls" preload="none" src="demos/reconstruction/1_rec.wav"></audio>
 						</td>
+
 					</table>
 				</div>
 			<br>
+
+
+				<!-- Analysis-control-generation -->
+			<!-- speech enhancement -->
+			<span style="font-size: large;"><strong>Analysis-control-generation</strong></span>
+			<hr>
+			<span style="font-size: large; color: darkblue"><strong>1- Speech enhancement</strong></span>
+				<br>
+			How to do speech enhancement with AnCoGen?  for that, we perform an analysis-<u>control</u>-generation process on noisy audio speech data. The analysis involves encoding noised audio speech sequences (<span style="color:red">\(\mathbf{x}^{(a)}\) </span>) and decoding the factors of variation (<span style="color:blue">\(\mathbf{x}^{(f)}\) </span>).  Subsequently, the control step consists of controlling and manipulating the SNR and C50. Concretely, we increase the value of these two factors of variation by a value denoted respectively by SNR control and C50 control. Lastly, the generation step synthesizes the audio sequence (<span style="color:red">\(\mathbf{x}^{(a)}\) </span>) from these factors modified in order to denoise the audio speech signal.
+			<br>
+				<br>
+				<div style="width:100%; text-align: justify; border: 2px dashed Blue; padding: 10px;">
+<!--					<span style="font-size: medium; color:Red;"><a name="Visual"></a><strong><font size="+2">RATIO 50%</font></strong></span>-->
+					<div style="text-align: center;">
+						<div style="display:grid; grid-auto-columns:1fr; gap: 15px; grid-template-columns: 1fr 0.75fr 1fr; grid-template-rows:auto;">
+							<button id="back_se" onclick="back_se()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 50%; position: absolute}">Back</button>
+							<b id="number-1" style="color:#5E77E7;font-size: 20px;opacity: 0.7;">Example 1</b>
+							<button id="next_se" onclick="next_se()" style="border-radius: 10px; width: 200px;font-size: 18px; position: absolute}">Next</button>
+						</div>
+					</div>
+					<br>
+					<br>
+					<table style="width:100%; text-align: center;">
+						<td>
+							<p> <font size="+2">Original</font> </p>
+							<audio id="noised_speech_enhancement" style="width: 300px" controls="controls" preload="none" src="demos/noise/1_original.wav"></audio>
+						</td>
+
+						<td>
+							<p> <font size="+2">Reconstruction with AnCoGeN (ours)</font> </p>
+							<audio id="denoised_speech_enhancement" style="width: 300px" controls="controls" preload="none" src="demos/noise/1_rec.wav"></audio>
+						</td>
+
+					</table>
+				</div>
+				<br>
+		<span style="font-size: large; color: darkred"><strong>2- Voice Conversion</strong></span>
+
 
 				<script>
 				backButton = document.getElementById("back");
@@ -188,6 +231,42 @@
 					number.innerHTML = "Example " + count;
 					document.getElementById('original_reconstruction').src="demos/reconstruction/"+count+"_original.wav"
 					document.getElementById('rec_reconstruction').src="demos/reconstruction/"+count+"_rec.wav"
+					}
+			</script>
+
+			<script>
+				backButton_se = document.getElementById("back_se");
+				nextButton_se = document.getElementById("next_se");
+				number_se = document.getElementById("number-1");
+				var count_se = 1;
+				if (count_se == 1){
+					backButton_se.disabled = true;
+				}
+
+				function next_se(){
+					count_se = count_se + 1;
+					if (count_se != 1){
+						backButton_se.disabled = false;
+					}
+					if (count_se == 16){
+						nextButton_se.disabled = true;
+					}
+					number_se.innerHTML = "Example " + count_se;
+					document.getElementById('noised_speech_enhancement').src="demos/noise/"+count_se+"_original.wav"
+					document.getElementById('denoised_speech_enhancement').src="demos/noise/"+count_se+"_rec.wav"
+					}
+
+				function back_se(){
+					count_se = count_se - 1;
+					if (count_se == 1){
+						backButton_se.disabled = true;
+					}
+					if (count_se < 16){
+						nextButton_se.disabled = false;
+					}
+					number_se.innerHTML = "Example " + count_se;
+					document.getElementById('noised_speech_enhancement').src="demos/noise/"+count_se+"_original.wav"
+					document.getElementById('denoised_speech_enhancement').src="demos/noise/"+count_se+"_rec.wav"
 					}
 			</script>
 
