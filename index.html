@@ -138,15 +138,15 @@
 <!--					<span style="font-size: medium; color:Red;"><a name="Visual"></a><strong><font size="+2">RATIO 50%</font></strong></span>-->
 					<div style="text-align: center;">
 						<div style="display:grid; grid-auto-columns:1fr; gap: 15px; grid-template-columns: 1fr 0.75fr 1fr; grid-template-rows:auto;">
-							<button id="back" onclick="back()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 50%; position: absolute}">Back</button>
-							<b id="number" style="color:darkolivegreen;font-size: 20px;opacity: 0.7;">Example 1</b>
+							<button id="back" onclick="back()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 40%; position: absolute}">Back</button>
+							<b id="number" style="color:darkolivegreen;font-size: 20px;opacity: 0.7;margin-left: -20%">Example 1/10</b>
 							<button id="next" onclick="next()" style="border-radius: 10px; width: 200px;font-size: 18px; position: absolute}">Next</button>
 						</div>
 					</div>
 					<br>
 					<br>
 					<table style="width:100%; text-align: center;">
-						<td>
+						<td style="border-right: solid 1px darkgreen;">
 							<p> <font size="+2">Original</font> </p>
 							<audio id="original_reconstruction" style="width: 300px" controls="controls" preload="none" src="demos/reconstruction/1_original.wav"></audio>
 						</td>
@@ -170,19 +170,19 @@
 			How to do speech enhancement with AnCoGen?  for that, we perform an analysis-<u>control</u>-generation process on noisy audio speech data. The analysis involves encoding noised audio speech sequences (<span style="color:red">\(\mathbf{x}^{(a)}\) </span>) and decoding the factors of variation (<span style="color:blue">\(\mathbf{x}^{(f)}\) </span>).  Subsequently, the control step consists of controlling and manipulating the SNR and C50. Concretely, we increase the value of these two factors of variation by a value denoted respectively by SNR control and C50 control. Lastly, the generation step synthesizes the audio sequence (<span style="color:red">\(\mathbf{x}^{(a)}\) </span>) from these factors modified in order to denoise the audio speech signal.
 			<br>
 				<br>
-				<div style="width:100%; text-align: justify; border: 2px dashed Blue; padding: 10px;">
+				<div style="width:100%; text-align: justify; border: 2px solid Blue; padding: 10px;">
 <!--					<span style="font-size: medium; color:Red;"><a name="Visual"></a><strong><font size="+2">RATIO 50%</font></strong></span>-->
 					<div style="text-align: center;">
 						<div style="display:grid; grid-auto-columns:1fr; gap: 15px; grid-template-columns: 1fr 0.75fr 1fr; grid-template-rows:auto;">
-							<button id="back_se" onclick="back_se()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 50%; position: absolute}">Back</button>
-							<b id="number-1" style="color:#5E77E7;font-size: 20px;opacity: 0.7;">Example 1</b>
+							<button id="back_se" onclick="back_se()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 40%; position: absolute}">Back</button>
+							<b id="number-1" style="color:#5E77E7;font-size: 20px;opacity: 0.7; margin-left: -20%;">Example 1/16</b>
 							<button id="next_se" onclick="next_se()" style="border-radius: 10px; width: 200px;font-size: 18px; position: absolute}">Next</button>
 						</div>
 					</div>
 					<br>
 					<br>
-					<table style="width:100%; text-align: center;">
-						<td>
+					<table style="width:100%; text-align: center">
+						<td style="border-right: solid 1px darkblue;">
 							<p> <font size="+2">Original</font> </p>
 							<audio id="noised_speech_enhancement" style="width: 300px" controls="controls" preload="none" src="demos/noise/1_original.wav"></audio>
 						</td>
@@ -195,8 +195,41 @@
 					</table>
 				</div>
 				<br>
-		<span style="font-size: large; color: darkred"><strong>2- Voice Conversion</strong></span>
 
+		<span style="font-size: large; color: darkred"><strong>2- Voice Conversion</strong></span>
+		<br>
+		AnCoGen functions as a voice conversion tool via the analysis-<u>control</u>-generation process between source signals and target signals. In the control step, we switch only the identity information from the target to the source signal, all other factors of variation of the source are preserved. 
+		<br>
+			<br>
+			<div style="width:100%; text-align: justify; border: 2px solid darkred; padding: 10px;">
+				<div style="text-align: center;">
+					<div style="display:grid; grid-auto-columns:1fr; gap: 15px; grid-template-columns: 1fr 0.75fr 1fr; grid-template-rows:auto;">
+						<button id="back_vc" onclick="back_vc()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 40%; position: absolute}">Back</button>
+						<b id="number-2" style="color: darkred;font-size: 20px;opacity: 0.7; margin-left: -20%;">Example 1/9</b>
+						<button id="next_vc" onclick="next_vc()" style="border-radius: 10px; width: 200px;font-size: 18px; position: absolute}">Next</button>
+					</div>
+				</div>
+				<br>
+				<br>
+				<table style="width:100%; text-align: center;">
+					<td style="border-right: solid 1px darkred;">
+						<p> <font size="+1">Target</font> </p>
+						<audio id="voice_conversion_target" style="width: 200px" controls="controls" preload="none" src="demos/voice_conversion/example_1/2-target_predicted.wav"></audio>
+					</td>
+
+					<td style="border-right: solid 1px darkred;">
+						<p> <font size="+1">Source</font> </p>
+						<audio id="voice_conversion_source" style="width: 200px" controls="controls" preload="none" src="demos/voice_conversion/example_1/1-source_predicted.wav"></audio>
+					</td>
+
+					<td>
+						<p> <font size="+1">Voice conversion with AnCoGen</font> </p>
+						<audio id="voice_conversion_result" style="width: 200px" controls="controls" preload="none" src="demos/voice_conversion/example_1/3-source_to_target_predicted.wav"></audio>
+					</td>
+
+				</table>
+			</div>
+			<br>
 
 				<script>
 				backButton = document.getElementById("back");
@@ -215,7 +248,7 @@
 					if (count == 10){
 						nextButton.disabled = true;
 					}
-					number.innerHTML = "Example " + count;
+					number.innerHTML = "Example " + count + "/10";
 					document.getElementById('original_reconstruction').src="demos/reconstruction/"+count+"_original.wav"
 					document.getElementById('rec_reconstruction').src="demos/reconstruction/"+count+"_rec.wav"
 					}
@@ -228,7 +261,7 @@
 					if (count < 10){
 						nextButton.disabled = false;
 					}
-					number.innerHTML = "Example " + count;
+					number.innerHTML = "Example " + count + "/10";
 					document.getElementById('original_reconstruction').src="demos/reconstruction/"+count+"_original.wav"
 					document.getElementById('rec_reconstruction').src="demos/reconstruction/"+count+"_rec.wav"
 					}
@@ -251,7 +284,7 @@
 					if (count_se == 16){
 						nextButton_se.disabled = true;
 					}
-					number_se.innerHTML = "Example " + count_se;
+					number_se.innerHTML = "Example " + count_se + "/16";
 					document.getElementById('noised_speech_enhancement').src="demos/noise/"+count_se+"_original.wav"
 					document.getElementById('denoised_speech_enhancement').src="demos/noise/"+count_se+"_rec.wav"
 					}
@@ -264,9 +297,50 @@
 					if (count_se < 16){
 						nextButton_se.disabled = false;
 					}
-					number_se.innerHTML = "Example " + count_se;
+					number_se.innerHTML = "Example " + count_se + "/16";
 					document.getElementById('noised_speech_enhancement').src="demos/noise/"+count_se+"_original.wav"
 					document.getElementById('denoised_speech_enhancement').src="demos/noise/"+count_se+"_rec.wav"
+					}
+			</script>
+
+
+
+			<script>
+				backButton_vc = document.getElementById("back_vc");
+				nextButton_vc = document.getElementById("next_vc");
+				number_vc = document.getElementById("number-2");
+				var count_vc = 1;
+				if (count_vc == 1){
+					backButton_vc.disabled = true;
+				}
+
+				function next_vc(){
+					count_vc = count_vc + 1;
+					if (count_vc != 1){
+						backButton_vc.disabled = false;
+					}
+					if (count_vc == 9){
+						nextButton_vc.disabled = true;
+					}
+					number_vc.innerHTML = "Example " + count_vc + "/9";
+					document.getElementById('voice_conversion_target').src="demos/voice_conversion/example_"+count_vc+"/2-target_predicted.wav"
+					document.getElementById('voice_conversion_source').src="demos/voice_conversion/example_"+count_vc+"/1-source_predicted.wav"
+					document.getElementById('voice_conversion_result').src="demos/voice_conversion/example_"+count_vc+"/3-source_to_target_predicted.wav"
+
+				}
+
+				function back_vc(){
+					count_vc = count_vc - 1;
+					if (count_vc == 1){
+						backButton_vc.disabled = true;
+					}
+					if (count_vc < 9){
+						nextButton_vc.disabled = false;
+					}
+					number_vc.innerHTML = "Example " + count_vc + "/9";
+					document.getElementById('voice_conversion_target').src="demos/voice_conversion/example_"+count_vc+"/2-target_predicted.wav"
+					document.getElementById('voice_conversion_source').src="demos/voice_conversion/example_"+count_vc+"/1-source_predicted.wav"
+					document.getElementById('voice_conversion_result').src="demos/voice_conversion/example_"+count_vc+"/3-source_to_target_predicted.wav"
 					}
 			</script>
 
