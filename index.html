@@ -56,16 +56,30 @@
 		}
 		</script>
 
+		<style type="text/css">a {text-decoration: none}</style>
 		<style>
-			table tr th, table tr td {
-			text-align: center;
-			vertical-align: middle;
-			border: 0px solid white;
-			border-collapse: collapse;
+			.container-row{
+			  display: flex;
+			}
+
+			.container-row .hero-image{
+			  flex: 1;
+				margin-left: 25px;
 			}
 		</style>
 
-		<style type="text/css">a {text-decoration: none}</style>
+		<style>
+		  div.scroll-container {
+			background-color: lightgray;
+			overflow: auto;
+			white-space: nowrap;
+			padding: 5px;
+		  }
+
+		  div.scroll-container img {
+			padding: 10px;
+		  }
+	  </style>
 
 	</head>
 
@@ -82,13 +96,13 @@
 					AnCoGen: a masked autoencoder-based model for analyzing, controlling, and generating audio speech
 				</h2>
 
-				<p style="text-align: center;">
-					Samir Sadok<sup>1</sup>&emsp;&emsp; Simon Leglaive<sup>1</sup> &emsp;&emsp;&emsp;
-				</p>
+<!--				<p style="text-align: center;">-->
+<!--					Samir Sadok<sup>1</sup>&emsp;&emsp; Simon Leglaive<sup>1</sup> &emsp;&emsp;&emsp;-->
+<!--				</p>-->
 
-				<p style="text-align: center; line-height: 100%;">
-					<sup>1</sup>CentraleSupélec, IETR UMR CNRS 6164, France &emsp;&emsp; <br>
-				</p>
+<!--				<p style="text-align: center; line-height: 100%;">-->
+<!--					<sup>1</sup>CentraleSupélec, IETR UMR CNRS 6164, France &emsp;&emsp; <br>-->
+<!--				</p>-->
 				<!--
 				<p style="text-align: center;">
 					Inproceedings
@@ -111,49 +125,121 @@
 				<div style="width:100%; text-align: center">
 					<table>
 						<td>
-							<img src="demos/ancogen.svg" alt="ancogen"  width="1100" />
+							<img src="demos/AnCoGen-high-level-2.svg" alt="ancogen" width="1100" />
 						</td>
 					</table>
 				</div>
+
 				<p style = "text-align: justify; vertical-align: top;">
-					Recent advancements in deep learning have led to significant progress in analyzing, controlling, and
-					generating audio speech. While various approaches have emerged to tackle these tasks individually,
-					this article focuses on a novel generative self-supervised learning method called AnCoGen, based
-					on masked autoencoders (MAE). While MAE-based methods have shown promise in tasks like
-					classification and segmentation, their potential for controllability and interpretability still needs to
-					be explored. This paper introduces the AnCoGen approach, which facilitates the analysis of audio
-					speech by estimating key factors of variation such as pitch, content, noise level, loudness, and identity.
-					Moreover, it enables the generation of audio speech from these factors and provides control over the
-					synthesized speech by modifying these factors. Extensive experiments are carried out to study the
-					capabilities of AnCoGen to analyze, control and generate speech audio.
+					This article introduces AnCoGen, a novel method that leverages masked autoencoders to unify the
+					analysis, control, and generation of audio speech within a single model. AnCoGen can analyze speech
+					by estimating key attributes such as speaker identity, pitch, content, loudness, signal-to-noise ratio,
+					and clarity index. Additionally, it can generate speech from these attributes and allows for precise
+					control of the synthesized speech by modifying them. Extensive experiments demonstrate AnCoGen's
+					effectiveness across various applications, including anaylsis-resynthesis, pitch estimation, pitch
+					manipulation, and speech enhancement.
 				</p>
 
-			<!-- Analysis-generation -->
-			<span style="font-size: large;"><a name="latentspace"></a><strong>Analysis-generation</strong></span>
+			<!-- Analysis -->
+			<span style="font-size: large;"><strong>Analysis</strong></span>
 			<hr>
-			We first present the results of an analysis-<u>generation</u> process on audio speech data. The analysis involves encoding audio speech sequences (<span style="color:red">\(\mathbf{x}^{(a)}\) </span>) and decoding the factors of variation (<span style="color:blue">\(\mathbf{x}^{(f)}\) </span>). Subsequently, the generation step consists of generating the audio sequence (<span style="color:red">\(\mathbf{x}^{(a)}\) </span>) from these factors obtained without any modification, intending to reconstruct the input sequence faithfully.
+				We perform an analysis process on audio speech data, which involves encoding audio speech sequences
+				(<span style="color:red">\(\mathbf{x}\) </span>) and decoding the the attributes (<span style="color:blue">\(\mathbf{A}_{1:6}\)</span>).
 			<br>
+			<br>
+			<div style="width:100%; text-align: justify; border: 2px solid gray; padding: 10px;">
+				<div style="width:100%; padding: 10px; background-color: lightgray; border-radius: 8px; margin-bottom: 20px;">
+					<form id="menuFormAnalysis" style="display: flex; justify-content: space-evenly	; align-items: center;">
+						<div>
+							<label for="selectExample" style="font-size: medium;"><strong>Example to analyze:</strong></label>
+							<select id="selectExample" onclick="changeImage()" name="selectExample"  style="font-size: medium; margin-left: 10px;">
+								<option value="example 1">1</option>
+								<option value="example 2">2</option>
+							</select>
+						</div>
+					</form>
+				</div>
+
+				<table style="width:100%; text-align: center;">
+					<td style="text-align: center">
+						<audio id="signal_analysis" style="width: 900px" controls="controls" preload="none" src="demos/analyzer/example 1/audio_original.wav"></audio>
+					</td>
+				</table>
+
+				<div>
+					<u> The attributes</u>:
+					<br>
+					(Scroll to the right to see the other attributes) In each of these figures, the blue outline
+					represents the original attributes and the red represents the prediction of our approach (AnCoGen).
+				</div>
+
+				<div class="scroll-container">
+				  <img id="pitch" src="demos/analyzer/example 1/pitch.png" width="600" height="400">
+				  <img id="loudness" src="demos/analyzer/example 1/loudness.png" width="600" height="400">
+				<!--  <img src="images/analyzer/example 1/identity.png" width="600" height="400">-->
+				  <img id="content" src="demos/analyzer/example 1/content.png" width="600" height="400">
+				  <img id="c50" src="demos/analyzer/example 1/c50.png" width="600" height="400">
+				  <img id="snr" src="demos/analyzer/example 1/snr.png" width="600" height="400">
+				</div>
+			</div>
 				<br>
+				<br>
+
+			<!-- Analysis-generation -->
+			<span style="font-size: large;"><strong>Analysis-generation</strong></span>
+			<hr>
+			<div class="container-row">
+			<!-- Section de texte -->
+				<div class="text-section">
+					<br>
+					<p style="text-align: justify">
+					We present some qualitative results of an analysis-<u>generation</u> process on audio speech data.
+					The analysis involves encoding audio speech sequences (<span style="color:red">\(\mathbf{x}\) </span>)
+					and decoding the attributes (<span style="color:blue">\(\mathbf{A}_{1:6}\) </span>).
+					Subsequently, the generation step consists of generating the audio sequence
+					(<span style="color:red">\(\mathbf{x}\) </span>) from these factors obtained without any modification,
+					intending to reconstruct the input sequence faithfully.
+					</p>
+				</div>
+
+				<!-- Section d'image -->
+				<div class="hero-image">
+					<img src="demos/analyzer-synthesizer.svg" alt="Speech Enhancement Diagram" width="550">
+				</div>
+			</div>
+
+			<br>
+			<br>
 				<div style="width:100%; text-align: justify; border: 2px dashed Green; padding: 10px;">
-<!--					<span style="font-size: medium; color:Red;"><a name="Visual"></a><strong><font size="+2">RATIO 50%</font></strong></span>-->
+					<div style="width:100%; padding: 10px; background-color: lightgray; border-radius: 8px; margin-bottom: 20px;">
+					<form id="menuFormAnalysisGeneration" style="display: flex; justify-content: space-evenly	; align-items: center;">
+						<div>
+								<label for="seenunseenSelect" style="font-size: medium;"><strong>Option:</strong></label>
+							<select id="seenunseenSelect" onclick="changeSeenunseen()" name="seenunseenSelect"  style="font-size: medium; margin-left: 10px;">
+								<option value="unseen">Unseen</option>
+								<option value="seen">Seen</option>
+							</select>
+						</div>
+					</form>
+				</div>
 					<div style="text-align: center;">
 						<div style="display:grid; grid-auto-columns:1fr; gap: 15px; grid-template-columns: 1fr 0.75fr 1fr; grid-template-rows:auto;">
 							<button id="back" onclick="back()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 40%; position: absolute}">Back &#8630;</button>
-							<b id="number" style="color:darkolivegreen;font-size: 20px;opacity: 0.7;margin-left: -20%">Example 1/10</b>
+							<b id="number" style="color:darkolivegreen;font-size: 20px;opacity: 0.7;margin-left: -20%">Example 1/5</b>
 							<button id="next" onclick="next()" style="border-radius: 10px; width: 200px;font-size: 18px; position: absolute}">Next &#8631;</button>
 						</div>
 					</div>
 					<br>
 					<br>
 					<table style="width:100%; text-align: center;">
-						<td style="border-right: solid 1px darkgreen;">
+						<td style="text-align: center; border-right: solid 1px darkgreen;">
 							<p> <font size="+2">Original</font> </p>
-							<audio id="original_reconstruction" style="width: 300px" controls="controls" preload="none" src="demos/reconstruction/1_original.wav"></audio>
+							<audio id="original_reconstruction" style="width: 300px" controls="controls" preload="none" src="demos/reconstruction/unseen/1_original.wav"></audio>
 						</td>
 
-						<td>
+						<td style="text-align: center">
 							<p> <font size="+2">Reconstruction with AnCoGeN (ours)</font> </p>
-							<audio id="rec_reconstruction" style="width: 300px" controls="controls" preload="none" src="demos/reconstruction/1_rec.wav"></audio>
+							<audio id="rec_reconstruction" style="width: 300px" controls="controls" preload="none" src="demos/reconstruction/unseen/1_rec.wav"></audio>
 						</td>
 
 					</table>
@@ -167,36 +253,158 @@
 			<hr>
 			<span style="font-size: large; color: darkblue"><strong>1- Speech enhancement</strong></span>
 				<br>
-			How to do speech enhancement with AnCoGen?  for that, we perform an analysis-<u>control</u>-generation process on noisy audio speech data. The analysis involves encoding noised audio speech sequences (<span style="color:red">\(\mathbf{x}^{(a)}\) </span>) and decoding the factors of variation (<span style="color:blue">\(\mathbf{x}^{(f)}\) </span>).  Subsequently, the control step consists of controlling and manipulating the SNR and C50. Concretely, we increase the value of these two factors of variation by a value denoted respectively by SNR control and C50 control. Lastly, the generation step synthesizes the audio sequence (<span style="color:red">\(\mathbf{x}^{(a)}\) </span>) from these factors modified in order to denoise the audio speech signal.
+			<div class="container-row">
+			<!-- Section de texte -->
+				<div class="text-section">
+					<p style="text-align: justify">
+						How to do speech enhancement with AnCoGen? For that, we perform an analysis-<u>control</u>-generation process on noisy audio speech data.
+					The analysis involves encoding noised audio speech sequences (<span style="color:red">\(\mathbf{x}\)</span>)
+					and decoding the attributes (<span style="color:blue">\(\mathbf{A}_{1:6}\)</span>).
+					Subsequently, the control step consists of controlling and manipulating the SNR. Concretely, we increase the
+					value of the SNR by +40 dB.
+					Lastly, the generation step synthesizes the audio sequence (<span style="color:red">\(\mathbf{x}\)</span>)
+					from these factors modified in order to denoise the audio speech signal.
+					</p>
+				</div>
+
+				<!-- Section d'image -->
+				<div class="hero-image">
+					<img src="demos/controler-se.svg" alt="Speech Enhancement Diagram" width="550">
+				</div>
+			</div>
 			<br>
 				<br>
-				<div style="width:100%; text-align: justify; border: 2px solid Blue; padding: 10px;">
+				<div style="width:100%; text-align: center; border: 2px solid #2c85a9; padding: 10px;">
+				<div style="width:100%; padding: 10px; background-color: lightgray; border-radius: 8px; margin-bottom: 20px;">
+				<form id="menuForm" style="display: flex; justify-content: space-evenly	; align-items: center;">
+					<div>
+						<label for="methodSelect" style="font-size: medium;"><strong>Method:</strong></label>
+						<select id="methodSelect" onclick="applyChanges()" name="methodSelect"  style="font-size: medium; margin-left: 10px;">
+							<option value="AnCoGen">AnCoGen (our)</option>
+							<option value="ConvTasNet">ConvTasNet</option>
+						</select>
+					</div>
+					<div>
+						<label for="databaseSelect" style="font-size: medium;"><strong>Database:</strong></label>
+						<select id="databaseSelect" name="databaseSelect" style="font-size: medium; margin-left: 10px;">
+							<option value="mssnsd">MS-SNSD</option>
+							<option value="librispeech">LibriSpeech+DEMAND</option>
+							<option value="libri1mix">Libri1Mix</option>
+						</select>
+					</div>
+				</form>
+			</div>
 <!--					<span style="font-size: medium; color:Red;"><a name="Visual"></a><strong><font size="+2">RATIO 50%</font></strong></span>-->
 					<div style="text-align: center;">
 						<div style="display:grid; grid-auto-columns:1fr; gap: 15px; grid-template-columns: 1fr 0.75fr 1fr; grid-template-rows:auto;">
 							<button id="back_se" onclick="back_se()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 40%; position: absolute}">Back &#8630;</button>
-							<b id="number-1" style="color:#5E77E7;font-size: 20px;opacity: 0.7; margin-left: -20%;">Example 1/16</b>
+							<b id="number-1" style="color:#5E77E7;font-size: 20px;opacity: 0.7; margin-left: -20%;">Example 1/5</b>
 							<button id="next_se" onclick="next_se()" style="border-radius: 10px; width: 200px;font-size: 18px; position: absolute}">Next &#8631;</button>
 						</div>
 					</div>
 					<br>
 					<br>
-					<table style="width:100%; text-align: center">
-						<td style="border-right: solid 1px darkblue;">
-							<p> <font size="+2">Original</font> </p>
-							<audio id="noised_speech_enhancement" style="width: 300px" controls="controls" preload="none" src="demos/noise/1_original.wav"></audio>
+					<table style="text-align: center; width:100%">
+						<td style="text-align: center; border-right: solid 1px darkblue;">
+							<p> <font size="+2">Noised</font> </p>
+							<audio id="noised_speech_enhancement" style="width: 300px" controls="controls" preload="none" src="demos/noise/mssnsd/AnCoGen/1_original.wav"></audio>
 						</td>
 
-						<td>
-							<p> <font size="+2">Reconstruction with AnCoGeN (ours)</font> </p>
-							<audio id="denoised_speech_enhancement" style="width: 300px" controls="controls" preload="none" src="demos/noise/1_rec.wav"></audio>
+						<td style="text-align: center; border-right: solid 1px darkblue;">
+							<p> <font size="+2">Reconstruction </font> </p>
+							<audio id="denoised_speech_enhancement" style="width: 300px" controls="controls" preload="none" src="demos/noise/mssnsd/AnCoGen/1_rec.wav"></audio>
 						</td>
 
+						<td style="text-align: center">
+							<p> <font size="+2">Original </font> </p>
+							<audio id="original_speech_enhancement" style="width: 300px" controls="controls" preload="none" src="demos/noise/mssnsd/AnCoGen/1_ref.wav"></audio>
+						</td>
 					</table>
 				</div>
+
 				<br>
 
-		<span style="font-size: large; color: darkred"><strong>2- Voice Conversion</strong></span>
+				<p>
+					<u> What impact does the SNR control value have on speech enhancement</u>? AnCoGen operates through
+					an analysis-control-synthesis process. In the control step, we adjust SNR.
+					The figure below illustrates the effect of the SNR control value, showing two metrics (MOS and STOI)
+					to examine the correlation between the SNR of the noisy signal and the SNR control value.
+					The x-axis represents the SNR of the noisy audio signal, while the y-axis represents the SNR control value.
+					The findings indicate that increasing the SNR control value leads to greater denoising of the speech audio signal.
+				</p>
+
+				<table style="display: flex; justify-content: space-around; text-align: center;"">
+					<td>
+						<img src="demos/mos.svg" alt="ancogen" width="450" />
+					</td>
+					<td>
+						<img src="demos/stoi.svg" alt="ancogen" width="450" />
+					</td>
+				</table>
+
+				<br>
+
+		<!--		Deverberation		-->
+		<span style="font-size: large; color: slateblue"><strong>2- Deverberation</strong></span>
+		<br>
+
+		<div class="container-row">
+			<!-- Section de texte -->
+				<div class="text-section">
+					<p style="text-align: justify">
+					How to do speech deverberation with AnCoGen? For that, we perform an analysis-<u>control</u>-generation
+					process on noisy audio speech data.
+					The analysis involves encoding noised audio speech sequences (<span style="color:red">\(\mathbf{x}\)</span>)
+					and decoding the attributes (<span style="color:blue">\(\mathbf{A}_{1:6}\)</span>).
+					Subsequently, the control step consists of controlling and manipulating the C50. Concretely, we increase the
+					value of the C50 by +50.
+					Lastly, the generation step synthesizes the audio sequence (<span style="color:red">\(\mathbf{x}\)</span>)
+					from these factors modified in order to denoise the audio speech signal.
+					</p>
+				</div>
+
+				<!-- Section d'image -->
+				<div class="hero-image">
+					<img src="demos/controler-dev.svg" alt="Speech Enhancement Deverb" width="550">
+				</div>
+			</div>
+
+			<br>
+
+			<div style="width:100%; text-align: justify; border: 2px solid slateblue; padding: 10px;">
+				<div style="text-align: center;">
+					<div style="display:grid; grid-auto-columns:1fr; gap: 15px; grid-template-columns: 1fr 0.75fr 1fr; grid-template-rows:auto;">
+						<button id="back_dev" onclick="back_dev()" style="border-radius: 10px; width: 200px;font-size: 18px; margin-left: 40%; position: absolute}">Back &#8630;</button>
+						<b id="number-dev" style="color: slateblue;font-size: 20px;opacity: 0.7; margin-left: -20%;">Example 1/5</b>
+						<button id="next_dev" onclick="next_dev()" style="border-radius: 10px; width: 200px;font-size: 18px; position: absolute}">Next &#8631;</button>
+					</div>
+				</div>
+				<br>
+				<br>
+				<table style="width:100%; text-align: center;">
+					<td style="text-align: center; border-right: solid 1px darkred;">
+						<p> <font size="+1">Noised</font> </p>
+						<audio id="noised_dev" style="width: 200px" controls="controls" preload="none" src="demos/reverb/1_original.wav"></audio>
+					</td>
+
+					<td style="text-align: center; border-right: solid 1px darkred;">
+						<p> <font size="+1">Reconstruction</font> </p>
+						<audio id="recon_dev" style="width: 200px" controls="controls" preload="none" src="demos/reverb/1_rec.wav"></audio>
+					</td>
+
+					<td style="text-align: center">
+						<p> <font size="+1">Original</font> </p>
+						<audio id="original_dev" style="width: 200px" controls="controls" preload="none" src="demos/reverb/1_ref.wav"></audio>
+					</td>
+
+				</table>
+			</div>
+			<br>
+			<br>
+
+
+		<!--		Voice conversion		-->
+		<span style="font-size: large; color: darkred"><strong>3- Voice Conversion</strong></span>
 		<br>
 		AnCoGen functions as a voice conversion tool via the analysis-<u>control</u>-generation process between source signals and target signals. In the control step, we switch only the identity information from the target to the source signal, all other factors of variation of the source are preserved. 
 		<br>
@@ -212,17 +420,17 @@
 				<br>
 				<br>
 				<table style="width:100%; text-align: center;">
-					<td style="border-right: solid 1px darkred;">
+					<td style="text-align: center; border-right: solid 1px darkred;">
 						<p> <font size="+1">Target</font> </p>
 						<audio id="voice_conversion_target" style="width: 200px" controls="controls" preload="none" src="demos/voice_conversion/example_1/2-target_predicted.wav"></audio>
 					</td>
 
-					<td style="border-right: solid 1px darkred;">
+					<td style="text-align: center; border-right: solid 1px darkred;">
 						<p> <font size="+1">Source</font> </p>
 						<audio id="voice_conversion_source" style="width: 200px" controls="controls" preload="none" src="demos/voice_conversion/example_1/1-source_predicted.wav"></audio>
 					</td>
 
-					<td>
+					<td style="text-align: center">
 						<p> <font size="+1">Voice conversion with AnCoGen</font> </p>
 						<audio id="voice_conversion_result" style="width: 200px" controls="controls" preload="none" src="demos/voice_conversion/example_1/3-source_to_target_predicted.wav"></audio>
 					</td>
@@ -232,8 +440,28 @@
 			<br>
 
 				<script>
+					function changeImage() {
+					selectexample = document.getElementById('selectExample').value;
+					console.log(selectexample)
+					document.getElementById('pitch').src="demos/analyzer/"+selectexample+"/pitch.png"
+					document.getElementById('content').src="demos/analyzer/"+selectexample+"/content.png"
+					document.getElementById('loudness').src="demos/analyzer/"+selectexample+"/loudness.png"
+					document.getElementById('c50').src="demos/analyzer/"+selectexample+"/c50.png"
+					document.getElementById('snr').src="demos/analyzer/"+selectexample+"/snr.png"
+					document.getElementById('signal_analysis').src="demos/analyzer/"+selectexample+"/audio_original.wav"
+					}
+
+				// Add event listeners to the select elements
+    			document.getElementById('selectExample').addEventListener('change', applyChanges);
+
+				</script>
+
+				<script>
 				backButton = document.getElementById("back");
 				nextButton = document.getElementById("next");
+				var selectedMethod = document.getElementById('methodSelect').value;
+				var selectedDatabase = document.getElementById('databaseSelect').value;
+
 				number = document.getElementById("number");
 				var count = 1;
 				if (count == 1){
@@ -245,12 +473,14 @@
 					if (count != 1){
 						backButton.disabled = false;
 					}
-					if (count == 10){
+					if (count == 5){
 						nextButton.disabled = true;
 					}
-					number.innerHTML = "Example " + count + "/10";
-					document.getElementById('original_reconstruction').src="demos/reconstruction/"+count+"_original.wav"
-					document.getElementById('rec_reconstruction').src="demos/reconstruction/"+count+"_rec.wav"
+					number.innerHTML = "Example " + count + "/5";
+					selectoption = document.getElementById('seenunseenSelect').value;
+
+					document.getElementById('original_reconstruction').src="demos/reconstruction/"+selectoption+'/'+count+"_original.wav"
+					document.getElementById('rec_reconstruction').src="demos/reconstruction/"+selectoption+'/'+count+"_rec.wav"
 					}
 
 				function back(){
@@ -258,19 +488,38 @@
 					if (count == 1){
 						backButton.disabled = true;
 					}
-					if (count < 10){
+					if (count < 5){
 						nextButton.disabled = false;
 					}
-					number.innerHTML = "Example " + count + "/10";
-					document.getElementById('original_reconstruction').src="demos/reconstruction/"+count+"_original.wav"
-					document.getElementById('rec_reconstruction').src="demos/reconstruction/"+count+"_rec.wav"
+					number.innerHTML = "Example " + count + "/5";
+					selectoption = document.getElementById('seenunseenSelect').value;
+
+					document.getElementById('original_reconstruction').src="demos/reconstruction/"+selectoption+'/'+count+"_original.wav"
+					document.getElementById('rec_reconstruction').src="demos/reconstruction/"+selectoption+'/'+count+"_rec.wav"
 					}
+
+				function changeSeenunseen() {
+					selectoption = document.getElementById('seenunseenSelect').value;
+
+					document.getElementById('original_reconstruction').src="demos/reconstruction/"+selectoption+'/'+count+"_original.wav"
+					document.getElementById('rec_reconstruction').src="demos/reconstruction/"+selectoption+'/'+count+"_rec.wav"
+
+					}
+
+				// Add event listeners to the select elements
+    			document.getElementById('seenunseenSelect').addEventListener('change', changeSeenunseen);
 			</script>
 
 			<script>
 				backButton_se = document.getElementById("back_se");
 				nextButton_se = document.getElementById("next_se");
 				number_se = document.getElementById("number-1");
+				selectedMethod = document.getElementById('methodSelect').value;
+				selectedDatabase = document.getElementById('databaseSelect').value;
+
+				var methodName;
+				var databaseName;
+
 				var count_se = 1;
 				if (count_se == 1){
 					backButton_se.disabled = true;
@@ -281,12 +530,18 @@
 					if (count_se != 1){
 						backButton_se.disabled = false;
 					}
-					if (count_se == 16){
+					if (count_se == 5){
 						nextButton_se.disabled = true;
 					}
-					number_se.innerHTML = "Example " + count_se + "/16";
-					document.getElementById('noised_speech_enhancement').src="demos/noise/"+count_se+"_original.wav"
-					document.getElementById('denoised_speech_enhancement').src="demos/noise/"+count_se+"_rec.wav"
+					number_se.innerHTML = "Example " + count_se + "/5";
+
+					selectedMethod = document.getElementById('methodSelect').value;
+					selectedDatabase = document.getElementById('databaseSelect').value;
+
+					document.getElementById('noised_speech_enhancement').src="demos/noise/"+selectedDatabase+"/"+selectedMethod+"/"+count_se+"_original.wav"
+					document.getElementById('denoised_speech_enhancement').src="demos/noise/"+selectedDatabase+"/"+selectedMethod+"/"+count_se+"_rec.wav"
+					document.getElementById('original_speech_enhancement').src="demos/noise/"+selectedDatabase+"/"+selectedMethod+"/"+count_se+"_ref.wav"
+
 					}
 
 				function back_se(){
@@ -294,16 +549,74 @@
 					if (count_se == 1){
 						backButton_se.disabled = true;
 					}
-					if (count_se < 16){
+					if (count_se < 5){
 						nextButton_se.disabled = false;
 					}
-					number_se.innerHTML = "Example " + count_se + "/16";
-					document.getElementById('noised_speech_enhancement').src="demos/noise/"+count_se+"_original.wav"
-					document.getElementById('denoised_speech_enhancement').src="demos/noise/"+count_se+"_rec.wav"
+					number_se.innerHTML = "Example " + count_se + "/5";
+					selectedMethod = document.getElementById('methodSelect').value;
+					selectedDatabase = document.getElementById('databaseSelect').value;
+
+					document.getElementById('noised_speech_enhancement').src="demos/noise/"+selectedDatabase+"/"+selectedMethod+"/"+count_se+"_original.wav"
+					document.getElementById('denoised_speech_enhancement').src="demos/noise/"+selectedDatabase+"/"+selectedMethod+"/"+count_se+"_rec.wav"
+					document.getElementById('original_speech_enhancement').src="demos/noise/"+selectedDatabase+"/"+selectedMethod+"/"+count_se+"_ref.wav"
 					}
+
+				function applyChanges() {
+					selectedMethod = document.getElementById('methodSelect').value;
+					selectedDatabase = document.getElementById('databaseSelect').value;
+
+					document.getElementById('noised_speech_enhancement').src="demos/noise/"+selectedDatabase+"/"+selectedMethod+"/"+count_se+"_original.wav"
+					document.getElementById('denoised_speech_enhancement').src="demos/noise/"+selectedDatabase+"/"+selectedMethod+"/"+count_se+"_rec.wav"
+					document.getElementById('original_speech_enhancement').src="demos/noise/"+selectedDatabase+"/"+selectedMethod+"/"+count_se+"_ref.wav"
+					// You can also send these values to a server or use them to update the content on the page
+					// For example, you could make an AJAX request or update the displayed data
+				}
+
+				// Add event listeners to the select elements
+    			document.getElementById('methodSelect').addEventListener('change', applyChanges);
+    			document.getElementById('databaseSelect').addEventListener('change', applyChanges);
 			</script>
 
 
+
+			<script>
+				backButton_dev = document.getElementById("back_dev");
+				nextButton_dev = document.getElementById("next_dev");
+				number_dev = document.getElementById("number-dev");
+				var count_dev = 1;
+				if (count_dev == 1){
+					backButton_dev.disabled = true;
+				}
+
+				function next_dev(){
+					count_dev = count_dev + 1;
+					if (count_dev != 1){
+						backButton_dev.disabled = false;
+					}
+					if (count_dev == 5){
+						nextButton_dev.disabled = true;
+					}
+					number_dev.innerHTML = "Example " + count_dev + "/5";
+					document.getElementById('noised_dev').src="demos/reverb/"+count_dev+"_original.wav"
+					document.getElementById('recon_dev').src="demos/reverb/"+count_dev+"_rec.wav"
+					document.getElementById('original_dev').src="demos/reverb/"+count_dev+"_ref.wav"
+
+				}
+
+				function back_dev(){
+					count_dev = count_dev - 1;
+					if (count_dev == 1){
+						backButton_dev.disabled = true;
+					}
+					if (count_dev < 5){
+						nextButton_dev.disabled = false;
+					}
+					number_dev.innerHTML = "Example " + count_dev + "/5";
+					document.getElementById('noised_dev').src="demos/reverb/"+count_dev+"_original.wav"
+					document.getElementById('recon_dev').src="demos/reverb/"+count_dev+"_rec.wav"
+					document.getElementById('original_dev').src="demos/reverb/"+count_dev+"_ref.wav"
+					}
+			</script>
 
 			<script>
 				backButton_vc = document.getElementById("back_vc");
@@ -343,6 +656,5 @@
 					document.getElementById('voice_conversion_result').src="demos/voice_conversion/example_"+count_vc+"/3-source_to_target_predicted.wav"
 					}
 			</script>
-
 </body>
 </html>
