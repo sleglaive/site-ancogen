@@ -397,7 +397,58 @@
 
 
 		<!--		Voice conversion		-->
-		<span style="font-size: large; color: darkred"><strong>3- Voice Conversion</strong></span>
+		<span style="font-size: large; color: darkmagenta"><strong>3- Pitch manipulation</strong></span>
+		<br>
+		<div class="container-row">
+			<!-- Section de texte -->
+				<div class="text-section">
+					<p style="text-align: justify">
+						<br>
+						How to do pitch manipulation with AnCoGen? For that, we perform an analysis-<u>control</u>-generation process on audio speech data.
+					The analysis involves encoding audio speech sequences (<span style="color:red">\(\mathbf{x}\)</span>)
+					and decoding the attributes (<span style="color:blue">\(\mathbf{A}_{1:6}\)</span>).
+					Subsequently, the control step consists of controlling and manipulating the pitch.
+					Lastly, the generation step synthesizes the audio sequence (<span style="color:red">\(\mathbf{x}\)</span>) with the modified pitch.
+					</p>
+				</div>
+
+				<!-- Section d'image -->
+				<div class="hero-image">
+					<img src="demos/controler-pitch.svg" alt="Speech Enhancement Diagram" width="550">
+				</div>
+			</div>
+			<br>
+			<div style="width:100%; text-align: justify; border: 2px solid darkmagenta; padding: 10px;">
+			<div style="width:100%; padding: 10px; background-color: lightgray; border-radius: 8px; margin-bottom: 20px;">
+				<form id="menuForm-pitch" style="display: flex; justify-content: space-evenly	; align-items: center;">
+					<div>
+						<label for="exampleSelect_pitch" style="font-size: medium;"><strong>Example:</strong></label>
+						<select id="exampleSelect_pitch" onclick="applyChanges_pitch()" name="exampleSelect_pitch"  style="font-size: medium; margin-left: 10px;">
+							<option value="1">1</option>
+							<option value="2">2</option>
+						</select>
+					</div>
+					<div>
+						<div class="slider-container">
+							<label for="mySlider">Pitch manipulation:</label>
+							<input type="range" id="mySlider" min="-80" max="80" value="0" step="20" style="width: 200px;" oninput="updateValue(this.value)">
+							<span id="sliderValue">0</span>
+						</div>
+					</div>
+				</form>
+			</div>
+
+				<table style="width:100%; text-align: center;">
+					<td style="text-align: center;">
+						<audio id="audio-pitch" style="width: 50%" controls="controls" preload="none" src="demos/pitch/example-1/0.wav"></audio>
+					</td>
+				</table>
+			</div>
+		<br>
+		<br>
+
+		<!--		Voice conversion		-->
+		<span style="font-size: large; color: darkred"><strong>4- Voice Conversion</strong></span>
 		<br>
 		AnCoGen functions as a voice conversion tool via the analysis-<u>control</u>-generation process between source signals and target signals. In the control step, we switch only the identity information from the target to the source signal, all other factors of variation of the source are preserved. 
 		<br>
@@ -570,6 +621,34 @@
     			document.getElementById('databaseSelect').addEventListener('change', applyChanges);
 			</script>
 
+			<script>
+				function updateValue(value) {
+				// Mettre à jour l'affichage de la valeur du slider
+				document.getElementById('sliderValue').textContent = value;
+
+				selectedExample = document.getElementById('exampleSelect_pitch').value;
+				v = String(value);
+				audioElement = document.getElementById('audio-pitch');
+            	audioElement.src = "demos/pitch/Example-" + selectedExample + "/" + v + ".wav";
+
+            	// Jouer l'audio automatiquement après avoir changé la source
+            	audioElement.play();
+
+				// Ici, vous pouvez ajouter toute autre logique que vous souhaitez exécuter lors du changement de la valeur du slider
+				console.log("Slider value changed to: " + value);
+			}
+
+			function applyChanges_pitch() {
+				selectedExample = document.getElementById('exampleSelect_pitch').value;
+				console.log("Examples: " + selectedExample);
+
+				v = document.getElementById('mySlider').value
+				document.getElementById('audio-pitch').src="demos/pitch/Example-"+selectedExample+"/"+v+".wav"
+			}
+
+			// Add event listeners to the select elements
+			document.getElementById('exampleSelect_pitch').addEventListener('change', applyChanges_pitch);
+			</script>
 
 
 			<script>
