@@ -352,8 +352,59 @@
 
 				<br>
 
+		<!--		Voice conversion		-->
+		<span style="font-size: large; color: darkmagenta"><strong>2- Pitch manipulation</strong></span>
+		<br>
+		<div class="container-row">
+			<!-- Section de texte -->
+				<div class="text-section">
+					<p style="text-align: justify">
+						<br>
+						How to do pitch manipulation with AnCoGen? For that, we perform an analysis-<u>control</u>-generation process on audio speech data.
+					The analysis involves encoding audio speech sequences (<span style="color:red">\(\mathbf{x}\)</span>)
+					and decoding the attributes (<span style="color:blue">\(\mathbf{A}_{1:6}\)</span>).
+					Subsequently, the control step consists of controlling and manipulating the pitch.
+					Lastly, the generation step synthesizes the audio sequence (<span style="color:red">\(\mathbf{x}\)</span>) with the modified pitch.
+					</p>
+				</div>
+
+				<!-- Section d'image -->
+				<div class="hero-image">
+					<img src="demos/controler-pitch.svg" alt="Speech Enhancement Diagram" width="550">
+				</div>
+			</div>
+			<br>
+			<div style="width:100%; text-align: justify; border: 2px solid darkmagenta; padding: 10px;">
+			<div style="width:100%; padding: 10px; background-color: lightgray; border-radius: 8px; margin-bottom: 20px;">
+				<form id="menuForm-pitch" style="display: flex; justify-content: space-evenly	; align-items: center;">
+					<div>
+						<label for="exampleSelect_pitch" style="font-size: medium;"><strong>Example:</strong></label>
+						<select id="exampleSelect_pitch" onclick="applyChanges_pitch()" name="exampleSelect_pitch"  style="font-size: medium; margin-left: 10px;">
+							<option value="1">1</option>
+							<option value="2">2</option>
+						</select>
+					</div>
+					<div>
+						<div class="slider-container">
+							<label for="mySlider">Pitch manipulation:</label>
+							<input type="range" id="mySlider" min="-80" max="80" value="0" step="20" style="width: 200px;" oninput="updateValue(this.value)">
+							<span id="sliderValue">0</span>
+						</div>
+					</div>
+				</form>
+			</div>
+
+				<table style="width:100%; text-align: center;">
+					<td style="text-align: center;">
+						<audio id="audio-pitch" style="width: 50%" controls="controls" preload="none" src="demos/pitch/Example-1/0.wav"></audio>
+					</td>
+				</table>
+			</div>
+		<br>
+		<br>
+
 		<!--		Deverberation		-->
-		<span style="font-size: large; color: slateblue"><strong>2- Deverberation</strong></span>
+		<span style="font-size: large; color: slateblue"><strong>3- Deverberation</strong></span>
 		<br>
 
 		<div class="container-row">
@@ -411,56 +462,7 @@
 			<br>
 
 
-		<!--		Voice conversion		-->
-		<span style="font-size: large; color: darkmagenta"><strong>3- Pitch manipulation</strong></span>
-		<br>
-		<div class="container-row">
-			<!-- Section de texte -->
-				<div class="text-section">
-					<p style="text-align: justify">
-						<br>
-						How to do pitch manipulation with AnCoGen? For that, we perform an analysis-<u>control</u>-generation process on audio speech data.
-					The analysis involves encoding audio speech sequences (<span style="color:red">\(\mathbf{x}\)</span>)
-					and decoding the attributes (<span style="color:blue">\(\mathbf{A}_{1:6}\)</span>).
-					Subsequently, the control step consists of controlling and manipulating the pitch.
-					Lastly, the generation step synthesizes the audio sequence (<span style="color:red">\(\mathbf{x}\)</span>) with the modified pitch.
-					</p>
-				</div>
 
-				<!-- Section d'image -->
-				<div class="hero-image">
-					<img src="demos/controler-pitch.svg" alt="Speech Enhancement Diagram" width="550">
-				</div>
-			</div>
-			<br>
-			<div style="width:100%; text-align: justify; border: 2px solid darkmagenta; padding: 10px;">
-			<div style="width:100%; padding: 10px; background-color: lightgray; border-radius: 8px; margin-bottom: 20px;">
-				<form id="menuForm-pitch" style="display: flex; justify-content: space-evenly	; align-items: center;">
-					<div>
-						<label for="exampleSelect_pitch" style="font-size: medium;"><strong>Example:</strong></label>
-						<select id="exampleSelect_pitch" onclick="applyChanges_pitch()" name="exampleSelect_pitch"  style="font-size: medium; margin-left: 10px;">
-							<option value="1">1</option>
-							<option value="2">2</option>
-						</select>
-					</div>
-					<div>
-						<div class="slider-container">
-							<label for="mySlider">Pitch manipulation:</label>
-							<input type="range" id="mySlider" min="-80" max="80" value="0" step="20" style="width: 200px;" oninput="updateValue(this.value)">
-							<span id="sliderValue">0</span>
-						</div>
-					</div>
-				</form>
-			</div>
-
-				<table style="width:100%; text-align: center;">
-					<td style="text-align: center;">
-						<audio id="audio-pitch" style="width: 50%" controls="controls" preload="none" src="demos/pitch/Example-1/0.wav"></audio>
-					</td>
-				</table>
-			</div>
-		<br>
-		<br>
 
 		<!--		Voice conversion		-->
 		<span style="font-size: large; color: darkred"><strong>4- Voice Conversion</strong></span>
