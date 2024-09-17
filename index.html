@@ -104,49 +104,39 @@
 		<div class="row">
 			<section class="12u">
 
-				<h1 style="text-align: center; font-size: xx-large;	">
+				<h1 style="text-align: center; font-size: xxx-large;">
 					AnCoGen: Analysis, Control and Generation of Speech with a Masked Autoencoder
 				</h1>
+				<h4 style="text-align: center; font-size: large;">
+					Samir Sadok<sup>1</sup>&emsp;&emsp; Simon Leglaive<sup>2</sup>&emsp;&emsp; Laurent Girin<sup>3</sup>&emsp;&emsp; Gaël Richard<sup>4</sup>&emsp;&emsp; Xavier Alameda-Pineda<sup>1</sup>&emsp;&emsp;
+				</h4>
 
-<!--				<p style="text-align: center;">-->
-<!--					Samir Sadok<sup>1</sup>&emsp;&emsp; Simon Leglaive<sup>1</sup> &emsp;&emsp;&emsp;-->
-<!--				</p>-->
+				<p style="text-align: center;"><sup>1</sup>Inria at Univ. Grenoble Alpes, CNRS, LJK, France <br> <sup>2</sup>CentraleSupélec, IETR UMR CNRS 6164, France <br/>
+				<sup>3</sup>Univ. Grenoble Alpes, CNRS, Grenoble INP, GIPSA-lab, France <br>
+				<sup>4</sup>LTCI, Télécom Paris, Institut polytechnique de Paris, France
+			   </p>
 
-<!--				<p style="text-align: center; line-height: 100%;">-->
-<!--					<sup>1</sup>CentraleSupélec, IETR UMR CNRS 6164, France &emsp;&emsp; <br>-->
-<!--				</p>-->
-				<!--
-				<p style="text-align: center;">
-					Inproceedings
-				</p> 
-				-->
-
-				<p style="text-align: center;">
-					 <a href="http://github.com/samsad35/AnCoGen-article" target="_blank" rel="noopener" style="font-size: large">Article</a> |
+				<p style="text-align: center; font-size: large;">
+					 <a href="" target="_blank" rel="noopener">Article</a> |
 					<!-- <a href="#audio">Audio examples</a> |  -->
 <!--					 <a href="documents/presentation_icassp2020.pdf">Slides</a> |  -->
-					<a href="http://github.com/samsad35/AnCoGen-code" target="_blank" rel="noopener" style="font-size: large">Code (will be released soon)</a>
+					<a href="" target="_blank" rel="noopener">Code (will be released upon acceptance)</a>
 					<!-- <a href="https://hal.archives-ouvertes.fr/hal-03603791v1/bibtex" target="_blank" rel="noopener">Bibtex</a> | -->
 					<!-- <a href="#acknowledgement">Acknowledgement</a> -->
 				</p>
 
-				<!-- Abstract -->
-				<strong><span style="font-size: x-large;">Abstract</span></strong>
+	
 				<hr>
-				<img src="demos/AnCoGen-high-level-2.svg" alt="ancogen" width="80%" style="display: block; margin: 0 auto;" />
+				<img src="demos/AnCoGen-high-level-2.svg" alt="ancogen" width="60%" style="display: block; margin: 0 auto;" />
+				<br>
+				<p>This website presents qualitative results of AnCoGen, a masked autoencoder model for the analysis, control, and generation of speech. As illustrated in the above figure, AnCoGen relies on a masking strategy to provide a bidirectional mapping between a Mel-spectrogram and a set of speech attributes representing not only the linguistic content, prosody (pitch and			loudness), and speaker identity, but also the acoustic recording conditions in terms of signal-to-noise ratio and clarity index.</p>
+								
+				<p>For speech analysis, AnCoGen takes a Mel-spectrogram as input and estimates the speech attributes. Conversely, for speech generation the model takes the speech attributes as input and predicts a Mel-spectrogram. Speech analysis and generation is achieved by the same model, by masking either the speech attributes or the Mel-spectrogram at the input.</p>	
+				
+				<p>As shown in the qualitative examples below, in between the analysis and generation steps, the speech attributes can be controlled for pitch manipulation, speech denoising, dereverberation, or voice conversion. </p>
 
-				<p style = "text-align: justify; vertical-align: top;">
-					This article introduces AnCoGen, a novel method that leverages masked autoencoders to unify the
-					analysis, control, and generation of audio speech within a single model. AnCoGen can analyze speech
-					by estimating key attributes such as speaker identity, pitch, content, loudness, signal-to-noise ratio,
-					and clarity index. Additionally, it can generate speech from these attributes and allows for precise
-					control of the synthesized speech by modifying them. Extensive experiments demonstrate AnCoGen's
-					effectiveness across various applications, including anaylsis-resynthesis, pitch estimation, pitch
-					manipulation, and speech enhancement.
-					<br>
-				</p>
-			<br>
-			<br>
+				<p>For more details, please see the paper.</p>
+
 
 			<!-- Analysis -->
 			<span style="font-size: x-large;"><strong>Analysis</strong></span>
