@@ -402,16 +402,16 @@
 			</div>
 		<br>
 		<br>
-
+		<p style="color: red"> 📢 The paper does not include detailed discussions on the applications of dereverberation and voice conversion. However, audio examples illustrating these applications are provided in the following sections.</p>
 		<!--		Deverberation		-->
-		<span style="font-size: large; color: slateblue"><strong>3- Deverberation</strong></span>
+		<span style="font-size: large; color: slateblue"><strong>3- De-reverberation</strong></span>
 		<br>
 
 		<div class="container-row">
 			<!-- Section de texte -->
 				<div class="text-section">
 					<p style="text-align: justify">
-					How to do speech deverberation with AnCoGen? For that, we perform an analysis-<u>control</u>-generation
+					How to do speech de-reverberation with AnCoGen? For that, we perform an analysis-<u>control</u>-generation
 					process on noisy audio speech data.
 					The analysis involves encoding noised audio speech sequences (<span style="color:red">\(\mathbf{x}\)</span>)
 					and decoding the attributes (<span style="color:blue">\(\mathbf{A}_{1:6}\)</span>).
@@ -424,7 +424,7 @@
 
 				<!-- Section d'image -->
 				<div class="hero-image">
-					<img src="demos/controler-dev.svg" alt="Speech Enhancement Deverb" width="550">
+					<img src="demos/controler-dev.svg" alt="Speech Enhancement De-rev." width="550">
 				</div>
 			</div>
 
@@ -447,7 +447,7 @@
 					</td>
 
 					<td style="text-align: center; border-right: solid 1px darkred;">
-						<p> <font size="+1">Reconstruction</font> </p>
+						<p> <font size="+1">Reconstruction (ours)</font> </p>
 						<audio id="recon_dev" style="width: 200px" controls="controls" preload="none" src="demos/reverb/1_rec.wav"></audio>
 					</td>
 
@@ -461,7 +461,41 @@
 			<br>
 			<br>
 
+		<div style="width:100%; text-align: justify; border: 2px solid slateblue; padding: 10px;">
+			<div style="width:100%; padding: 10px; background-color: lightgray; border-radius: 8px; margin-bottom: 20px;">
+				<form id="menuForm-control" style="display: flex; justify-content: space-evenly	; align-items: center;">
+					<div>
+						<label for="exampleSelect_control" style="font-size: medium;"><strong>Example:</strong></label>
+						<select id="exampleSelect_control" onclick="applyChanges_control()" name="exampleSelect_control"  style="font-size: medium; margin-left: 10px;">
+							<option value="1">1</option>
+							<option value="2">2</option>
+						</select>
+					</div>
+					<div>
+						<div>
+							<label class="checkbox-label">
+        					<input type="checkbox" id="myCheckreverb" onclick="checkCheckbox_derverb()"> Dereverb
+    						</label>
+						</div>
+					</div>
+					<div>
+						<div>
+							<label class="checkbox-label">
+        					<input type="checkbox" id="myChecksnr" onclick="checkCheckbox_denoise()"> Denoise
+    						</label>
+						</div>
+					</div>
+				</form>
+			</div>
 
+				<table style="width:100%; text-align: center;">
+					<td style="text-align: center;">
+						<audio id="control-audio" style="width: 50%" controls="controls" preload="none" src="demos/noise_reverb/example-1/1_noised.wav"></audio>
+					</td>
+				</table>
+			</div>
+		<br>
+		<br>
 
 
 		<!--		Voice conversion		-->
@@ -708,6 +742,69 @@
 					document.getElementById('recon_dev').src="demos/reverb/"+count_dev+"_rec.wav"
 					document.getElementById('original_dev').src="demos/reverb/"+count_dev+"_ref.wav"
 					}
+			</script>
+
+			<script>
+				function checkCheckbox_derverb() {
+					var checkbox_reverb = document.getElementById("myCheckreverb");
+					var checkbox_denoise = document.getElementById("myChecksnr");
+					audioElement = document.getElementById('control-audio');
+					selectedExample = document.getElementById('exampleSelect_control').value;
+
+					if (checkbox_reverb.checked && checkbox_denoise.checked){
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_rec_rev_snr.wav"
+					}
+					else if(checkbox_reverb.checked && (!checkbox_denoise.checked)){
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_rec_rev.wav"
+					}
+					else if((!checkbox_reverb.checked) && (checkbox_denoise.checked)){
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_rec_snr.wav"
+					}else{
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_noised.wav"
+					}
+
+					audioElement.play();
+
+				}
+
+				function checkCheckbox_denoise() {
+					var checkbox_reverb = document.getElementById("myCheckreverb");
+					var checkbox_denoise = document.getElementById("myChecksnr");
+					audioElement = document.getElementById('control-audio');
+					selectedExample = document.getElementById('exampleSelect_control').value;
+
+					if (checkbox_reverb.checked && checkbox_denoise.checked){
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_rec_rev_snr.wav"
+					}
+					else if(checkbox_reverb.checked && (!checkbox_denoise.checked)){
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_rec_rev.wav"
+					}
+					else if((!checkbox_reverb.checked) && (checkbox_denoise.checked)){
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_rec_snr.wav"
+					}else{
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_noised.wav"
+					}
+					audioElement.play();
+				}
+
+				function applyChanges_control(){
+					var checkbox_reverb = document.getElementById("myCheckreverb");
+					var checkbox_denoise = document.getElementById("myChecksnr");
+					audioElement = document.getElementById('control-audio');
+					selectedExample = document.getElementById('exampleSelect_control').value;
+
+					if (checkbox_reverb.checked && checkbox_denoise.checked){
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_rec_rev_snr.wav"
+					}
+					else if(checkbox_reverb.checked && (!checkbox_denoise.checked)){
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_rec_rev.wav"
+					}
+					else if((!checkbox_reverb.checked) && (checkbox_denoise.checked)){
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_rec_snr.wav"
+					}else{
+						document.getElementById('control-audio').src="demos/noise_reverb/example-"+ selectedExample+"/1_noised.wav"
+					}
+				}
 			</script>
 
 			<script>
